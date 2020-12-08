@@ -3,7 +3,7 @@
 # Daniel Villatoro
 
 def mad():
-    print("pepa")
+    print("inicio mad")
 
 
 mad()
