@@ -10,11 +10,25 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="11c832b8-810c-4e0c-b370-c293ba8dc0a1" name="Default Changelist" comment="Iniciando Proyecto" />
+    <list default="true" id="11c832b8-810c-4e0c-b370-c293ba8dc0a1" name="Default Changelist" comment="cambios varios">
+      <change afterPath="$PROJECT_DIR$/Abeja" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Flor.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fondo.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/imagenprueba.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -29,8 +43,13 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="configurable.group.language" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Usuario\Documents\GitHub\GeneticsDD" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
@@ -71,7 +90,14 @@
       <option name="project" value="LOCAL" />
       <updated>1607466402416</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="cambios varios">
+      <created>1607466772180</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1607466772180</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -84,35 +110,61 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Iniciando Proyecto" />
-    <option name="LAST_COMMIT_MESSAGE" value="Iniciando Proyecto" />
+    <MESSAGE value="cambios varios" />
+    <option name="LAST_COMMIT_MESSAGE" value="cambios varios" />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1515" height="223" key="GridCell.Tab.0.bottom" timestamp="1607466731675">
+    <state x="223" y="87" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1607475461413">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1515" height="223" key="GridCell.Tab.0.bottom/0.0.1536.864/1920.0.1920.1080@0.0.1536.864" timestamp="1607466731675" />
-    <state width="1515" height="223" key="GridCell.Tab.0.center" timestamp="1607466731675">
+    <state x="223" y="87" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.864/1920.0.1920.1080@0.0.1536.864" timestamp="1607475461413" />
+    <state x="537" y="234" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1607480235237">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1515" height="223" key="GridCell.Tab.0.center/0.0.1536.864/1920.0.1920.1080@0.0.1536.864" timestamp="1607466731675" />
-    <state width="1515" height="223" key="GridCell.Tab.0.left" timestamp="1607466731675">
+    <state x="537" y="234" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1536.864/1920.0.1920.1080@0.0.1536.864" timestamp="1607480235237" />
+    <state width="1515" height="223" key="GridCell.Tab.0.bottom" timestamp="1607490774648">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1515" height="223" key="GridCell.Tab.0.left/0.0.1536.864/1920.0.1920.1080@0.0.1536.864" timestamp="1607466731675" />
-    <state width="1515" height="223" key="GridCell.Tab.0.right" timestamp="1607466731675">
+    <state width="1515" height="223" key="GridCell.Tab.0.bottom/0.0.1536.864/1920.0.1920.1080@0.0.1536.864" timestamp="1607490774648" />
+    <state width="1515" height="223" key="GridCell.Tab.0.center" timestamp="1607490774648">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1515" height="223" key="GridCell.Tab.0.right/0.0.1536.864/1920.0.1920.1080@0.0.1536.864" timestamp="1607466731675" />
+    <state width="1515" height="223" key="GridCell.Tab.0.center/0.0.1536.864/1920.0.1920.1080@0.0.1536.864" timestamp="1607490774648" />
+    <state width="1515" height="223" key="GridCell.Tab.0.left" timestamp="1607490774647">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state width="1515" height="223" key="GridCell.Tab.0.left/0.0.1536.864/1920.0.1920.1080@0.0.1536.864" timestamp="1607490774647" />
+    <state width="1515" height="223" key="GridCell.Tab.0.right" timestamp="1607490774648">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state width="1515" height="223" key="GridCell.Tab.0.right/0.0.1536.864/1920.0.1920.1080@0.0.1536.864" timestamp="1607490774648" />
+    <state width="1515" height="277" key="GridCell.Tab.1.bottom" timestamp="1607490301897">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state width="1515" height="277" key="GridCell.Tab.1.bottom/0.0.1536.864/1920.0.1920.1080@0.0.1536.864" timestamp="1607490301897" />
+    <state width="1515" height="277" key="GridCell.Tab.1.center" timestamp="1607490301897">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state width="1515" height="277" key="GridCell.Tab.1.center/0.0.1536.864/1920.0.1920.1080@0.0.1536.864" timestamp="1607490301897" />
+    <state width="1515" height="277" key="GridCell.Tab.1.left" timestamp="1607490301897">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state width="1515" height="277" key="GridCell.Tab.1.left/0.0.1536.864/1920.0.1920.1080@0.0.1536.864" timestamp="1607490301897" />
+    <state width="1515" height="277" key="GridCell.Tab.1.right" timestamp="1607490301897">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state width="1515" height="277" key="GridCell.Tab.1.right/0.0.1536.864/1920.0.1920.1080@0.0.1536.864" timestamp="1607490301897" />
     <state x="277" y="77" key="SettingsEditor" timestamp="1607466726938">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="277" y="77" key="SettingsEditor/0.0.1536.864/1920.0.1920.1080@0.0.1536.864" timestamp="1607466726938" />
-    <state x="361" y="165" key="Vcs.Push.Dialog.v2" timestamp="1607466407251">
+    <state x="361" y="165" key="Vcs.Push.Dialog.v2" timestamp="1607466777980">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="361" y="165" key="Vcs.Push.Dialog.v2/0.0.1536.864/1920.0.1920.1080@0.0.1536.864" timestamp="1607466407251" />
+    <state x="361" y="165" key="Vcs.Push.Dialog.v2/0.0.1536.864/1920.0.1920.1080@0.0.1536.864" timestamp="1607466777980" />
   </component>
 </project>

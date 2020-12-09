@@ -1,0 +1,13 @@
+class Abeja:
+    def __init__(self,color,direccion,angulo,recorrido,distancia):
+        self.color = color # (0,0,0)
+        self.direccion = direccion #(0,0,0)
+        self.angulo =  angulo #0
+        self.recorrido =  recorrido # [(punto,inicio),ordenrecorrido,random]
+        self.distancia =  distancia #0
+        self.floresVisitadas = 0
+        self.distanciaRecorrida = 0
+        self.polenRecogido = []
+
+
+
