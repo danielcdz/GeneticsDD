@@ -1,5 +1,5 @@
 class Abeja:
-    def __init__(self,color,genColor,direccion,genDireccion,angulo,recorrido,distancia):
+    def __init__(self,color,direccion,genDireccion,angulo,recorrido,distancia):
         self.genColor = genColor #0
         self.genDireccion = genDireccion
         self.color = color # (0,0,0)

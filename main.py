@@ -5,18 +5,46 @@
 import pygame
 import numpy as np
 from PIL import Image
-
+from abeja import *
+from flor import *
+import  random
 
 imagen1 = np.array(Image.open('fondo.jpg'))
+cantFlores = 500
+cantColores = 16
+matrizFlores = []
+colores = []
+
+def guardarColores():
+    global colores
+    for i in range(cantFlores):
+        R = random.randint(1, 255)
+        G = random.randint(1, 255)
+        B = random.randint(1, 255)
+        colores+=[(R,G,B)]
 
 
+def crearMatrizFlores():
+    res = []
+    temp = []
+    for i in range(100):
+        for j in range(100):
+            temp+=[0]
+        res+=[temp]
+        temp=[]
+    global matrizFlores
+    matrizFlores = res
 
-
-
-
-
-
-
+def generacion1Flores():
+    global matrizFlores
+    for i in range(cantFlores):
+        X = random.randint(0, 99)
+        Y = random.randint(0, 99)
+        color = colores[random.randint(0, 15)]
+        pos = (X, Y )
+        flor = Flor(color,pos,[])
+        imagen1[pos[0]][pos[1]] = color
+        matrizFlores[pos[0]][pos[1]] = flor
 
 
 def modificarPixeles():
@@ -48,6 +76,11 @@ while run:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                guardarColores()
+                crearMatrizFlores()
+                generacion1Flores()
 
     win.fill(white)
     modificarPixeles()
