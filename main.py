@@ -16,19 +16,109 @@ cantAbejas = 15
 matrizFlores = []
 colores = []
 poblacionAbejas = []
+generacion = 0
 
 def busquedaAbejas():
     global poblacionAbejas
-    for abeja in poblacionAbejas:
-        if abeja.getRecorrido()[0] == 1:
-            salirPanal(abeja)
+    global generacion
+    abejas = poblacionAbejas[generacion]
+    for abeja in abejas:
+        if abeja.getRecorrido()[2] == 1: # random
+            recorridoRandom(abeja)
+        if abeja.getRecorrido()[0] == 1: # salida desde el panal
+            if abeja.getRecorrido()[1] == 1: #recorrido por profundidad
+                salirPanal(abeja)
+            if abeja.getRecorrido()[1] == 2: #recorrido por anchura
+                salirPanal(abeja)
         else:
-            haciaPanal(abeja)
+            if abeja.getRecorrido()[1] == 1:  # recorrido por profundidad
+                haciaPanal(abeja)
+            if abeja.getRecorrido()[1] == 2:  # recorrido por anchura
+                haciaPanal(abeja)
+
+
+def recorridoRandom(abeja):
+    direccion = abeja.getDireccion()
+    angulo = abeja.getAngulo()
+    distancia = random.randint(80, 250)
+    if direccion == 1: #Norte
+        recorridoRandomAux(abeja,direccion,angulo,distancia,1,-1)
+        # recorrido(abeja,direccion,angulo,distancia, 0, 1, 50, 50,1,-1) # i,j,x,y
+    if direccion == 2:  # oeste
+        recorridoRandomAux(abeja, direccion, angulo, distancia, 1, -1)
+        recorrido(abeja,direccion, angulo, distancia, 0, 1, 50, 50,1,-1) # i,j,x,y
+    if direccion == 3:  # sur
+        recorridoRandomAux(abeja, direccion, angulo, distancia, 1, -1)
+        recorrido(abeja,direccion, angulo, distancia, 0, 1, 50, 50,1,-1) # i,j,x,y
+    if direccion == 4:  # este
+        recorridoRandomAux(abeja, direccion, angulo, distancia, 1, -1)
+        recorrido(abeja,direccion, angulo, distancia, 0, 1, 50, 50,1,-1) # i,j,x,y
+
+def recorridoRandomAux(abeja,direccion,angulo,distancia,op1,op2):
+    x = 50
+    y = 50
+    while distancia != 0:
+        i = random.randint(1, angulo)
+        j = random.randint(1, angulo)
+        x = x+(i*op1)
+        y = y+(j*op2)
+        flor = matrizFlores[x][y]
+        if flor != 0:
+            flor.visitaNueva()
+            flor.agregarPolen(abeja.getPolen())
+            abeja.aumentarFloresVisitadas()
+            abeja.nuevoPolen((x, y))
+        x = 50
+        y = 50
+        if direccion == 1 or direccion == 3:
+            op1 *= -1
+        elif direccion == 2 or direccion == 4:
+            op2 *= -1
+        distancia -= 10
 
 
 def salirPanal(abeja):
+    direccion = abeja.getDireccion()
+    angulo = abeja.getAngulo()
+    distancia = random.randint(80, 250)
+    if direccion == 1: #Norte
+        recorrido(abeja,direccion,angulo,distancia, 0, 1, 50, 50,1,-1) # i,j,x,y
+    if direccion == 2:  # oeste
+        recorrido(abeja,direccion, angulo, distancia, 0, 1, 50, 50,1,-1) # i,j,x,y
+    if direccion == 3:  # sur
+        recorrido(abeja,direccion, angulo, distancia, 0, 1, 50, 50,1,-1) # i,j,x,y
+    if direccion == 4:  # este
+        recorrido(abeja,direccion, angulo, distancia, 0, 1, 50, 50,1,-1) # i,j,x,y
+    # if direccion == 5:  # noroeste
+    #     recorrido(abeja, angulo, distancia, 0, 1, 50, 50,1,-1) # i,j,x,y
+    # if direccion == 6:  # suroeste
+    #     recorrido(abeja, angulo, distancia, 0, 1, 50, 50,1,-1) # i,j,x,y
+    # if direccion == 7:  # sureste
+    #     recorrido(abeja, angulo, distancia, 0, 1, 50, 50,1,-1) # i,j,x,y
+    # if direccion == 8:  # noreste
+    #     recorrido(abeja, angulo, distancia, 0, 1, 50, 50,1,-1) # i,j,x,y
+    abeja.setDistancia(distancia)
 
 
+def recorrido(abeja,direccion,angulo,distancia,i,j,x,y,op1,op2):
+    if distancia==0:
+        return True
+    if x>99 or y>99 or x<0 or y<0:
+        i = random.randint(1, angulo)
+        j = random.randint(1, angulo)
+        if direccion == 1 or direccion == 3:
+            op1*=-1
+        elif direccion == 2 or direccion == 4:
+            op2*=-1
+        return recorrido(abeja,direccion,angulo,distancia,i,j,50,50,op1,op2)
+    else:
+        flor = matrizFlores[x][y]
+        if flor != 0:
+            flor.visitaNueva()
+            flor.agregarPolen(abeja.getPolen())
+            abeja.aumentarFloresVisitadas()
+            abeja.nuevoPolen((x,y))
+        return recorrido(abeja,direccion,angulo,distancia-1,i,j,x+(i*op1),y+(j*op2),op1,op2)
 
 
 
@@ -67,9 +157,9 @@ def generacion1Abejas():
     temp = []
     for i in range(cantAbejas):
         color = colores[random.randint(0, 15)]
-        direccion = random.randint(1, 8)
-        angulo = random.randint(0, 50)
-        recorrido = (random.randint(1, 2),random.randint(1, 2),random.randint(1, 2))
+        direccion = random.randint(1, 4)
+        angulo = random.randint(1, 30)
+        recorrido = (1,1,random.randint(1, 2))#(random.randint(1, 2),random.randint(1, 2),random.randint(1, 2))
         distancia = random.randint(1,50)
         abeja = Abeja(color,direccion,angulo,recorrido,distancia)
         temp+=[abeja]
@@ -111,6 +201,8 @@ while run:
                 crearMatrizFlores()
                 generacion1Flores()
                 generacion1Abejas()
+                busquedaAbejas()
+                1+1
 
 
     win.fill(white)

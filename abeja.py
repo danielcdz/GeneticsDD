@@ -10,8 +10,23 @@ class Abeja:
         self.polenRecogido = []
         self.adaptabilidadNormalizada = 0
 
+    def getPolen(self):
+        return self.polenRecogido
+
     def getRecorrido(self):
         return self.recorrido
+
+    def setDistancia(self,distancia):
+        self.distanciaRecorrida = distancia
+
+    def getDireccion(self):
+        return self.direccion
+
+    def getAngulo(self):
+        return self.angulo
+
+    def getDistancia(self):
+        return self.distancia
 
     def setAdaptabilidad(self,valor):
         self.adaptabilidadNormalizada = valor
