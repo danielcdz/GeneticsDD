@@ -43,21 +43,17 @@ def recorridoRandom(abeja):
     distancia = random.randint(80, 250)
     if direccion == 1: #Norte
         recorridoRandomAux(abeja,direccion,angulo,distancia,1,-1)
-        # recorrido(abeja,direccion,angulo,distancia, 0, 1, 50, 50,1,-1) # i,j,x,y
     if direccion == 2:  # oeste
-        recorridoRandomAux(abeja, direccion, angulo, distancia, 1, -1)
-        recorrido(abeja,direccion, angulo, distancia, 0, 1, 50, 50,1,-1) # i,j,x,y
+        recorridoRandomAux(abeja, direccion, angulo, distancia, 1, 1)
     if direccion == 3:  # sur
-        recorridoRandomAux(abeja, direccion, angulo, distancia, 1, -1)
-        recorrido(abeja,direccion, angulo, distancia, 0, 1, 50, 50,1,-1) # i,j,x,y
+        recorridoRandomAux(abeja, direccion, angulo, distancia, 1, 1)
     if direccion == 4:  # este
-        recorridoRandomAux(abeja, direccion, angulo, distancia, 1, -1)
-        recorrido(abeja,direccion, angulo, distancia, 0, 1, 50, 50,1,-1) # i,j,x,y
+        recorridoRandomAux(abeja, direccion, angulo, distancia, -1, 1)
 
 def recorridoRandomAux(abeja,direccion,angulo,distancia,op1,op2):
     x = 50
     y = 50
-    while distancia != 0:
+    while distancia > 0:
         i = random.randint(1, angulo)
         j = random.randint(1, angulo)
         x = x+(i*op1)
@@ -84,19 +80,11 @@ def salirPanal(abeja):
     if direccion == 1: #Norte
         recorrido(abeja,direccion,angulo,distancia, 0, 1, 50, 50,1,-1) # i,j,x,y
     if direccion == 2:  # oeste
-        recorrido(abeja,direccion, angulo, distancia, 0, 1, 50, 50,1,-1) # i,j,x,y
+        recorrido(abeja,direccion, angulo, distancia, 0, 1, 50, 50,1,1) # i,j,x,y
     if direccion == 3:  # sur
-        recorrido(abeja,direccion, angulo, distancia, 0, 1, 50, 50,1,-1) # i,j,x,y
+        recorrido(abeja,direccion, angulo, distancia, 0, 1, 50, 50,1,1) # i,j,x,y
     if direccion == 4:  # este
-        recorrido(abeja,direccion, angulo, distancia, 0, 1, 50, 50,1,-1) # i,j,x,y
-    # if direccion == 5:  # noroeste
-    #     recorrido(abeja, angulo, distancia, 0, 1, 50, 50,1,-1) # i,j,x,y
-    # if direccion == 6:  # suroeste
-    #     recorrido(abeja, angulo, distancia, 0, 1, 50, 50,1,-1) # i,j,x,y
-    # if direccion == 7:  # sureste
-    #     recorrido(abeja, angulo, distancia, 0, 1, 50, 50,1,-1) # i,j,x,y
-    # if direccion == 8:  # noreste
-    #     recorrido(abeja, angulo, distancia, 0, 1, 50, 50,1,-1) # i,j,x,y
+        recorrido(abeja,direccion, angulo, distancia, 0, 1, 50, 50,-1,1) # i,j,x,y
     abeja.setDistancia(distancia)
 
 
