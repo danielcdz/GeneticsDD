@@ -12,12 +12,29 @@ import  random
 imagen1 = np.array(Image.open('fondo.jpg'))
 cantFlores = 500
 cantColores = 16
+cantAbejas = 15
 matrizFlores = []
 colores = []
+poblacionAbejas = []
+
+def busquedaAbejas():
+    global poblacionAbejas
+    for abeja in poblacionAbejas:
+        if abeja.getRecorrido()[0] == 1:
+            salirPanal(abeja)
+        else:
+            haciaPanal(abeja)
+
+
+def salirPanal(abeja):
+
+
+
+
 
 def guardarColores():
     global colores
-    for i in range(cantFlores):
+    for i in range(cantColores):
         R = random.randint(1, 255)
         G = random.randint(1, 255)
         B = random.randint(1, 255)
@@ -45,6 +62,18 @@ def generacion1Flores():
         flor = Flor(color,pos,[])
         imagen1[pos[0]][pos[1]] = color
         matrizFlores[pos[0]][pos[1]] = flor
+
+def generacion1Abejas():
+    temp = []
+    for i in range(cantAbejas):
+        color = colores[random.randint(0, 15)]
+        direccion = random.randint(1, 8)
+        angulo = random.randint(0, 50)
+        recorrido = (random.randint(1, 2),random.randint(1, 2),random.randint(1, 2))
+        distancia = random.randint(1,50)
+        abeja = Abeja(color,direccion,angulo,recorrido,distancia)
+        temp+=[abeja]
+    poblacionAbejas.append(temp)
 
 
 def modificarPixeles():
@@ -81,6 +110,8 @@ while run:
                 guardarColores()
                 crearMatrizFlores()
                 generacion1Flores()
+                generacion1Abejas()
+
 
     win.fill(white)
     modificarPixeles()
