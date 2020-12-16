@@ -6,6 +6,8 @@ class Flor:
         self.polenRecogido = []
         self.cantidadVisitas = 0
 
+    def getVisitas(self):
+        return self.cantidadVisitas
 
     def visitaNueva(self):
         self.cantidadVisitas += 1

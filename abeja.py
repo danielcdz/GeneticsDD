@@ -11,6 +11,7 @@ class Abeja:
         self.adaptabilidadNormalizada = 0
         self.distanciaXflores = 0
 
+
     def setDistanciaXFlores(self,valor):
         self.distanciaXflores = valor
 

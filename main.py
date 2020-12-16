@@ -18,6 +18,21 @@ colores = []
 poblacionAbejas = []
 generacion = 0
 promediosAdaptabilidad = []
+poblacionesFlores = [] #historial del campo de flores
+floresXCruces = [] #flores seleccionadas para cruzar
+
+
+
+def agruparFlores():
+    res = []
+    for i in matrizFlores:
+        for j in i:
+            flor = j
+            if j != 0:
+                if j.getVisitas() != 0:
+                    res += [j]
+    poblacionesFlores.append([res])
+
 
 
 def calcularDistanciaXFlores():
@@ -27,7 +42,6 @@ def calcularDistanciaXFlores():
         distanciaRecorrida = abeja.getDistanciaRecorrida()
         valor = flores / distanciaRecorrida
         abeja.setDistanciaXFlores(valor)
-
 
 def ordenarAbejas():
     global poblacionAbejas
@@ -224,8 +238,7 @@ def generacion1Abejas():
         color = colores[random.randint(0, 15)]
         direccion = random.randint(1, 4)
         angulo = random.randint(1, 30)
-        recorrido = (1, 1, random.randint(1,
-                                          2))  # (random.randint(1, 2),random.randint(1, 2),random.randint(1, 2)) #(1,1,random.randint(1, 2))
+        recorrido = (1, 1, random.randint(1,2))  # (random.randint(1, 2),random.randint(1, 2),random.randint(1, 2)) #(1,1,random.randint(1, 2))
         distancia = random.randint(1, 50)
         abeja = Abeja(color, direccion, angulo, recorrido, distancia)
         temp += [abeja]
