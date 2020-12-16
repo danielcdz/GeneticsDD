@@ -30,9 +30,28 @@ def calcularDistanciaXFlores():
 
 
 def ordenarAbejas():
+    global poblacionAbejas
     abejas = poblacionAbejas[generacion]
     n = len(abejas)
     abejas = quickSort(abejas,0,n-1)
+    # poblacionAbejas[generacion] = abejas
+
+def sumatoriaAdaptabilidad():
+    global promediosAdaptabilidad
+    res = 0
+    abejas = poblacionAbejas[generacion]
+    for abeja in abejas:
+        valor = abeja.getDistanciaXFlores()
+        res+=valor
+    promediosAdaptabilidad+=[res]
+
+def asignarAdaptabilidadNormalizada():
+    abejas = poblacionAbejas[generacion]
+    promedio = promediosAdaptabilidad[generacion]
+    for abeja in abejas:
+        valor = abeja.getDistanciaXFlores()
+        adaptabilidadNormalizada = valor/promedio
+        abeja.setAdaptabilidad(adaptabilidadNormalizada)
 
 
 #tomado de: https://www.geeksforgeeks.org/python-program-for-quicksort/
@@ -250,6 +269,8 @@ while run:
                 busquedaAbejas()
                 calcularDistanciaXFlores()
                 ordenarAbejas()
+                sumatoriaAdaptabilidad()
+                asignarAdaptabilidadNormalizada()
                 1 + 1
 
     win.fill(white)
