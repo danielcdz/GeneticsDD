@@ -9,6 +9,13 @@ class Abeja:
         self.distanciaRecorrida = 0
         self.polenRecogido = []
         self.adaptabilidadNormalizada = 0
+        self.distanciaXflores = 0
+
+    def setDistanciaXFlores(self,valor):
+        self.distanciaXflores = valor
+
+    def getDistanciaXFlores(self):
+        return self.distanciaXflores
 
     def getPolen(self):
         return self.polenRecogido
@@ -43,8 +50,11 @@ class Abeja:
     def setDistanciaRecorrida(self,distancia):
         self.distanciaRecorrida = distancia
 
-    def busqueda(self):
-        pass
+    def getDistanciaRecorrida(self):
+        return self.distanciaRecorrida
+
+    def getCantidadFlores(self):
+        return self.floresVisitadas
 
 
 
