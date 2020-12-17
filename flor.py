@@ -5,6 +5,19 @@ class Flor:
         self.polen = posicion #posicion
         self.polenRecogido = []
         self.cantidadVisitas = 0
+        self.genes = []
+
+    def setGenes(self):
+        R = bin(self.color[0])[2:]
+        G = bin(self.color[1])[2:]
+        B = bin(self.color[2])[2:]
+        X = bin(self.posicion[0])[2:]
+        Y = bin(self.posicion[1])[2:]
+        self.genes.append(R)
+        self.genes.append(G)
+        self.genes.append(B)
+        self.genes.append(X)
+        self.genes.append(Y)
 
     def getVisitas(self):
         return self.cantidadVisitas

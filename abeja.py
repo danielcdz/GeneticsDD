@@ -10,6 +10,20 @@ class Abeja:
         self.polenRecogido = []
         self.adaptabilidadNormalizada = 0
         self.distanciaXflores = 0
+        self.genes = []
+
+
+    def setGenes(self):
+        R = bin(self.color[0])[2:]
+        G = bin(self.color[1])[2:]
+        B = bin(self.color[2])[2:]
+        direccion = bin(self.direccion)[2:]
+        angulo = bin(self.angulo)[2:]
+        self.genes.append(R)
+        self.genes.append(G)
+        self.genes.append(B)
+        self.genes.append(direccion)
+        self.genes.append(angulo)
 
 
     def setDistanciaXFlores(self,valor):

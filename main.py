@@ -20,18 +20,77 @@ generacion = 0
 promediosAdaptabilidad = []
 poblacionesFlores = [] #historial del campo de flores
 floresXCruces = [] #flores seleccionadas para cruzar
+floresNOCruces = [] #flores no visitadas
+porcentajeSeleccionAbejas = 30
+porcentajeSeleccionFlores = 30
+
+
+
+def cruces():
+    seleccionAbejas = cantAbejas * porcentajeSeleccionAbejas // 100
+    seleccionFlores = cantFlores * porcentajeSeleccionFlores // 100
+    cruceFlores(seleccionFlores)
+    cruceAbejas(seleccionAbejas)
+    generacion += 1
+
 
 
 def agruparFlores():
-    res = []
+    cruce = []
+    noCruce = []
+    poblacion = []
     for i in matrizFlores:
         for j in i:
-            flor = j
             if j != 0:
+                poblacion += [j]
                 if j.getVisitas() != 0:
-                    res += [j]
-    poblacionesFlores.append([res])
+                    cruce += [j]
+                else:
+                    noCruce += [j]
+    poblacionesFlores.append(poblacion)
+    floresXCruces.append(cruce)
+    floresNOCruces.append(noCruce)
 
+def ordenarFloresCruce():
+    flores = floresXCruces[generacion]
+    n = len(flores)
+    flores = quickSortFlores(flores,0,n-1)
+
+#tomado de: https://www.geeksforgeeks.org/python-program-for-quicksort/
+# Python program for implementation of Quicksort Sort
+# This function takes last element as pivot, places
+# the pivot element at its correct position in sorted
+# array, and places all smaller (smaller than pivot)
+# to left of pivot and all greater elements to right
+# of pivot
+def partitionFlores(arr, low, high):
+    i = (low - 1)  # index of smaller element
+    pivot = arr[high].getVisitas()  # pivot
+    for j in range(low, high):
+        # If current element is smaller than or
+        # equal to pivot
+        if arr[j].getVisitas() <= pivot:
+            # increment index of smaller element
+            i = i + 1
+            arr[i], arr[j] = arr[j], arr[i]
+    arr[i + 1], arr[high] = arr[high], arr[i + 1]
+    return i + 1
+# The main function that implements QuickSort
+# arr[] --> Array to be sorted,
+# low --> Starting index,
+# high --> Ending index
+# Function to do Quick sort
+def quickSortFlores(arr, low, high):
+    if len(arr) == 1:
+        return arr
+    if low < high:
+        # pi is partitioning index, arr[p] is now
+        # at right place
+        pi = partitionFlores(arr, low, high)
+        # Separately sort elements before
+        # partition and after partition
+        quickSortFlores(arr, low, pi - 1)
+        quickSortFlores(arr, pi + 1, high)
 
 
 def calcularDistanciaXFlores():
@@ -43,11 +102,10 @@ def calcularDistanciaXFlores():
         abeja.setDistanciaXFlores(valor)
 
 def ordenarAbejas():
-    global poblacionAbejas
+    # global poblacionAbejas
     abejas = poblacionAbejas[generacion]
     n = len(abejas)
-    abejas = quickSort(abejas,0,n-1)
-    # poblacionAbejas[generacion] = abejas
+    abejas = quickSortAbejas(abejas,0,n-1)
 
 def sumatoriaAdaptabilidad():
     global promediosAdaptabilidad
@@ -74,7 +132,7 @@ def asignarAdaptabilidadNormalizada():
 # array, and places all smaller (smaller than pivot)
 # to left of pivot and all greater elements to right
 # of pivot
-def partition(arr, low, high):
+def partitionAbejas(arr, low, high):
     i = (low - 1)  # index of smaller element
     pivot = arr[high].getDistanciaXFlores()  # pivot
     for j in range(low, high):
@@ -87,23 +145,22 @@ def partition(arr, low, high):
     arr[i + 1], arr[high] = arr[high], arr[i + 1]
     return i + 1
 
-
 # The main function that implements QuickSort
 # arr[] --> Array to be sorted,
 # low --> Starting index,
 # high --> Ending index
 # Function to do Quick sort
-def quickSort(arr, low, high):
+def quickSortAbejas(arr, low, high):
     if len(arr) == 1:
         return arr
     if low < high:
         # pi is partitioning index, arr[p] is now
         # at right place
-        pi = partition(arr, low, high)
+        pi = partitionAbejas(arr, low, high)
         # Separately sort elements before
         # partition and after partition
-        quickSort(arr, low, pi - 1)
-        quickSort(arr, pi + 1, high)
+        quickSortAbejas(arr, low, pi - 1)
+        quickSortAbejas(arr, pi + 1, high)
 
 
 def busquedaAbejas():
@@ -227,6 +284,7 @@ def generacion1Flores():
         color = colores[random.randint(0, 15)]
         pos = (X, Y)
         flor = Flor(color, pos, [])
+        flor.setGenes()
         imagen1[pos[0]][pos[1]] = color
         matrizFlores[pos[0]][pos[1]] = flor
 
@@ -240,6 +298,7 @@ def generacion1Abejas():
         recorrido = (1, 1, random.randint(1,2))  # (random.randint(1, 2),random.randint(1, 2),random.randint(1, 2)) #(1,1,random.randint(1, 2))
         distancia = random.randint(1, 50)
         abeja = Abeja(color, direccion, angulo, recorrido, distancia)
+        abeja.setGenes()
         temp += [abeja]
     poblacionAbejas.append(temp)
 
@@ -283,6 +342,8 @@ while run:
                 ordenarAbejas()
                 sumatoriaAdaptabilidad()
                 asignarAdaptabilidadNormalizada()
+                agruparFlores()
+                ordenarFloresCruce()
                 1 + 1
 
     win.fill(white)
