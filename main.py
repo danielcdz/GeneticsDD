@@ -22,7 +22,6 @@ poblacionesFlores = [] #historial del campo de flores
 floresXCruces = [] #flores seleccionadas para cruzar
 
 
-
 def agruparFlores():
     res = []
     for i in matrizFlores:
