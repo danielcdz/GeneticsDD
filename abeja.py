@@ -1,3 +1,4 @@
+import random
 class Abeja:
     def __init__(self,color,direccion,angulo,recorrido,distancia):
         self.color = color # (0,0,0)
@@ -11,7 +12,42 @@ class Abeja:
         self.adaptabilidadNormalizada = 0
         self.distanciaXflores = 0
         self.genes = []
+        self.padres = []
+        self.ancestros = []
+        self.mutada = False
 
+
+    def setPadres(self,padre,madre):
+        self.padres.append((padre))
+        self.padres.append((madre))
+
+    def setAncestros(self,ancestros):
+        self.ancestros.append(self.padres[0])
+        self.ancestros.append(self.padres[1])
+        for ancestro in ancestros:
+            self.ancestros.append(ancestro)
+
+    def getAncestros(self):
+        return self.ancestros
+
+    def getPadres(self):
+        return self.padres
+
+    def mutacion(self):
+        direcciones = ['0001','0010','0011','0100']
+        self.genes[3] = direcciones[random.randint(0,3)]
+        colores = self.genes[0]
+        R = colores[0][::-1]
+        G = colores[1][::-1]
+        B = colores[2][::-1]
+        colores = (R,G,B)
+        self.genes[0] = colores
+        angulo = self.genes[4]
+        self.genes[4] = angulo[::-1]
+        self.angulo = int(angulo[::-1],2)
+        self.color = (int(R,2),int(G,2),int(B,2))
+        self.direccion = int(self.genes[3],2)
+        self.mutada = True
 
 
     def getGenes(self):

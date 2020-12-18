@@ -21,8 +21,10 @@ promediosAdaptabilidad = []
 poblacionesFlores = [] #historial del campo de flores
 floresXCruces = [] #flores seleccionadas para cruzar
 floresNOCruces = [] #flores no visitadas
-porcentajeSeleccionAbejas = 30
-porcentajeSeleccionFlores = 30
+porcentajeSeleccionAbejas = 40
+porcentajeSeleccionFlores = 40
+porcentajeMutacion = 15
+
 
 
 
@@ -33,7 +35,6 @@ def cruces():
     # cruceFlores(seleccionFlores)
     cruceAbejas(seleccionAbejas)
     generacion += 1
-
 
 
 def cruceAbejas(indiceSeleccion):
@@ -81,8 +82,13 @@ def cruceAbejas(indiceSeleccion):
 
         abeja1 =Abeja(color1, direccion1, angulo1, recorrido1, distancia1)
         abeja1.setGenes()
+        abeja1.setPadres((generacion,posPadre),(generacion,posMadre))
+        abeja1.setAncestros(padre.getAncestros())
+
         abeja2 = Abeja(color2, direccion2, angulo2, recorrido2, distancia2)
         abeja2.setGenes()
+        abeja2.setPadres((generacion,posPadre),(generacion,posMadre))
+        abeja2.setAncestros(madre.getAncestros())
 
         temp += [abeja1]
         temp += [abeja2]
@@ -92,23 +98,14 @@ def cruceAbejas(indiceSeleccion):
 
     poblacionAbejas.append(temp)
 
-
-
-# temp = []
-# for i in range(cantAbejas):
-#     color = colores[random.randint(0, 15)]
-#     direccion = random.randint(1, 4)
-#     angulo = random.randint(1, 30)
-#     recorrido = (1, 1, random.randint(1,
-#                                       2))  # (random.randint(1, 2),random.randint(1, 2),random.randint(1, 2)) #(1,1,random.randint(1, 2))
-#     distancia = random.randint(1, 50)
-#     abeja = Abeja(color, direccion, angulo, recorrido, distancia)
-#     abeja.setGenes()
-#     temp += [abeja]
-# poblacionAbejas.append(temp)
-
-
-
+def mutacionAbejas():
+    abejas = poblacionAbejas[generacion]
+    indiceMutacion = cantAbejas * porcentajeMutacion // 100
+    cantMutadas = 0
+    while cantMutadas <= indiceMutacion:
+        abeja = abejas[random.randint(0,len(abejas)-1)]
+        abeja.mutacion()
+        cantMutadas+=1
 
 
 def agruparFlores():
@@ -375,6 +372,8 @@ def generacion1Abejas():
         distancia = random.randint(1, 50)
         abeja = Abeja(color, direccion, angulo, recorrido, distancia)
         abeja.setGenes()
+        # abeja.setPadres((-1,-1))
+        # abeja.setAncestros([])
         temp += [abeja]
     poblacionAbejas.append(temp)
 
@@ -421,6 +420,7 @@ while run:
                 agruparFlores()
                 ordenarFloresCruce()
                 cruces()
+                mutacionAbejas()
                 1 + 1
 
     win.fill(white)
