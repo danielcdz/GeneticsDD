@@ -12,7 +12,7 @@ import random
 imagen1 = np.array(Image.open('fondo.jpg'))
 cantFlores = 500
 cantColores = 16
-cantAbejas = 15
+cantAbejas = 16
 matrizFlores = []
 colores = []
 poblacionAbejas = []
@@ -27,11 +27,87 @@ porcentajeSeleccionFlores = 30
 
 
 def cruces():
+    global generacion
     seleccionAbejas = cantAbejas * porcentajeSeleccionAbejas // 100
     seleccionFlores = cantFlores * porcentajeSeleccionFlores // 100
-    cruceFlores(seleccionFlores)
+    # cruceFlores(seleccionFlores)
     cruceAbejas(seleccionAbejas)
     generacion += 1
+
+
+
+def cruceAbejas(indiceSeleccion):
+    abejas = poblacionAbejas[generacion]
+    abejasSeleccionadas = abejas[indiceSeleccion:] #abejas seleccionadas para el cruce
+    cantNoSeleccionadas = indiceSeleccion
+    cantSeleccionadas = len(abejasSeleccionadas)
+    posPadre=0
+    posMadre=1
+    temp=[]
+
+    while posMadre<=cantAbejas-1:
+        if posMadre == cantSeleccionadas:
+            padre = abejas[random.randint(0,cantSeleccionadas)]
+            madre = abejas[random.randint(0,cantSeleccionadas)]
+        padre = abejas[posPadre]
+        madre = abejas[posMadre]
+        genesPadre = padre.getGenes()
+        genesMadre = madre.getGenes()
+        cromosomasCruce = random.randint(1,4)
+        genPadre = genesPadre[cromosomasCruce]
+        genMadre = genesMadre[cromosomasCruce]
+        genesPadre[cromosomasCruce] = genMadre
+        genesMadre[cromosomasCruce] = genPadre
+
+        # Hijo 1
+        R1 = int(genesMadre[0],2)
+        G1 = int(genesMadre[1],2)
+        B1 = int(genesMadre[2],2)
+        color1 = (R1,G1,B1)
+        direccion1 = int(genesMadre[3],2)
+        angulo1 = int(genesMadre[4],2)
+        recorrido1 = (1, 1, random.randint(1, 2))
+        distancia1 = random.randint(1, 50)
+
+        # Hijo 2
+        R2 = int(genesPadre[0],2)
+        G2 = int(genesPadre[1],2)
+        B2 = int(genesPadre[2],2)
+        color2 = (R2,G2,B2)
+        direccion2 = int(genesPadre[3],2)
+        angulo2 = int(genesPadre[4],2)
+        recorrido2 = (1, 1, random.randint(1,2))
+        distancia2 = random.randint(1, 50)
+
+        abeja1 =Abeja(color1, direccion1, angulo1, recorrido1, distancia1)
+        abeja1.setGenes()
+        abeja2 = Abeja(color2, direccion2, angulo2, recorrido2, distancia2)
+        abeja2.setGenes()
+
+        temp += [abeja1]
+        temp += [abeja2]
+
+        posPadre+=2
+        posMadre+=2
+
+    poblacionAbejas.append(temp)
+
+
+
+# temp = []
+# for i in range(cantAbejas):
+#     color = colores[random.randint(0, 15)]
+#     direccion = random.randint(1, 4)
+#     angulo = random.randint(1, 30)
+#     recorrido = (1, 1, random.randint(1,
+#                                       2))  # (random.randint(1, 2),random.randint(1, 2),random.randint(1, 2)) #(1,1,random.randint(1, 2))
+#     distancia = random.randint(1, 50)
+#     abeja = Abeja(color, direccion, angulo, recorrido, distancia)
+#     abeja.setGenes()
+#     temp += [abeja]
+# poblacionAbejas.append(temp)
+
+
 
 
 
@@ -344,6 +420,7 @@ while run:
                 asignarAdaptabilidadNormalizada()
                 agruparFlores()
                 ordenarFloresCruce()
+                cruces()
                 1 + 1
 
     win.fill(white)

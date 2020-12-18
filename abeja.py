@@ -13,6 +13,10 @@ class Abeja:
         self.genes = []
 
 
+
+    def getGenes(self):
+        return self.genes
+
     def setGenes(self):
         R = bin(self.color[0])[2:]
         G = bin(self.color[1])[2:]
