@@ -19,6 +19,9 @@ class Flor:
         self.genes.append(X)
         self.genes.append(Y)
 
+    def getGenes(self):
+        return self.genes
+
     def getVisitas(self):
         return self.cantidadVisitas
 

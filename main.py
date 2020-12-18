@@ -22,7 +22,7 @@ poblacionesFlores = [] #historial del campo de flores
 floresXCruces = [] #flores seleccionadas para cruzar
 floresNOCruces = [] #flores no visitadas
 porcentajeSeleccionAbejas = 40
-porcentajeSeleccionFlores = 40
+porcentajeSeleccionFlores = 30
 porcentajeMutacion = 15
 
 
@@ -32,9 +32,64 @@ def cruces():
     global generacion
     seleccionAbejas = cantAbejas * porcentajeSeleccionAbejas // 100
     seleccionFlores = cantFlores * porcentajeSeleccionFlores // 100
-    # cruceFlores(seleccionFlores)
+    cruceFlores(seleccionFlores)
     cruceAbejas(seleccionAbejas)
     generacion += 1
+
+
+def cruceFlores(indiceSeleccion):
+    flores = poblacionesFlores[generacion]
+    floresSeleccionadas = flores[indiceSeleccion:]  # abejas seleccionadas para el cruce
+    cantNoSeleccionadas = indiceSeleccion
+    cantSeleccionadas = len(floresSeleccionadas)
+    posPadre = 0
+    posMadre = 1
+    temp = []
+    while posMadre <= cantFlores -1:
+        if posMadre == cantSeleccionadas:
+            padre = flores[random.randint(0, cantSeleccionadas)]
+            madre = flores[random.randint(0, cantSeleccionadas)]
+        padre = flores[posPadre]
+        madre = flores[posMadre]
+        genesPadre = padre.getGenes()
+        genesMadre = madre.getGenes()
+        cromosomasCruce = random.randint(1, 4)
+        genPadre = genesPadre[cromosomasCruce]
+        genMadre = genesMadre[cromosomasCruce]
+        genesPadre[cromosomasCruce] = genMadre
+        genesMadre[cromosomasCruce] = genPadre
+
+        # Hijo 1
+        R1 = int(genesMadre[0], 2)
+        G1 = int(genesMadre[1], 2)
+        B1 = int(genesMadre[2], 2)
+        color1 = (R1, G1, B1)
+        X1 = int(genesMadre[3], 2)
+        Y1 = int(genesMadre[4], 2)
+        pos1 = (X1,Y1)
+
+        # Hijo 2
+        R2 = int(genesPadre[0], 2)
+        G2 = int(genesPadre[1], 2)
+        B2 = int(genesPadre[2], 2)
+        color2 = (R1, G1, B1)
+        X2 = int(genesPadre[3], 2)
+        Y2 = int(genesPadre[4], 2)
+        pos2 = (X1, Y1)
+
+        flor1 = Flor(color1, pos1, [])
+        flor1.setGenes()
+
+        flor2 = Flor(color2, pos2, [])
+        flor2.setGenes()
+
+        temp += [flor1]
+        temp += [flor2]
+
+        posPadre += 2
+        posMadre += 2
+    poblacionesFlores.append(temp)
+
 
 
 def cruceAbejas(indiceSeleccion):
@@ -354,6 +409,9 @@ def generacion1Flores():
     for i in range(cantFlores):
         X = random.randint(0, 99)
         Y = random.randint(0, 99)
+        while not disponible(X,Y):
+            X = random.randint(0, 99)
+            Y = random.randint(0, 99)
         color = colores[random.randint(0, 15)]
         pos = (X, Y)
         flor = Flor(color, pos, [])
@@ -361,6 +419,10 @@ def generacion1Flores():
         imagen1[pos[0]][pos[1]] = color
         matrizFlores[pos[0]][pos[1]] = flor
 
+def disponible(x,y):
+    if matrizFlores[x][y] == 0:
+        return True
+    return False
 
 def generacion1Abejas():
     temp = []
