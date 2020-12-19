@@ -6,6 +6,20 @@ class Flor:
         self.polenRecogido = []
         self.cantidadVisitas = 0
         self.genes = []
+        self.mutacion = False
+
+
+    def getPos(self):
+        return self.posicion
+
+    def mutacion(self):
+        X = self.genes[3]
+        Y = self.genes[4]
+        self.genes[3] = X[::-1]
+        self.genes[4] = Y[::-1]
+        pos = (self.genes[3],self.genes[4])
+        self.posicion = pos
+        self.mutacion = True
 
     def setGenes(self):
         R = bin(self.color[0])[2:]
@@ -31,7 +45,7 @@ class Flor:
     def agregarPolen(self,nuevoPolen):
         self.polenRecogido.append(nuevoPolen)
 
-    def color(self):
+    def getColor(self):
         return self.color
 
     def posicion(self):

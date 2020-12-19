@@ -36,12 +36,14 @@ class Abeja:
     def mutacion(self):
         direcciones = ['0001','0010','0011','0100']
         self.genes[3] = direcciones[random.randint(0,3)]
-        colores = self.genes[0]
-        R = colores[0][::-1]
-        G = colores[1][::-1]
-        B = colores[2][::-1]
-        colores = (R,G,B)
-        self.genes[0] = colores
+        # colores = self.genes[0]
+        R = self.genes[0][::-1]
+        G = self.genes[1][::-1]
+        B = self.genes[2][::-1]
+        # colores = (R,G,B)
+        self.genes[0] = R
+        self.genes[1] = G
+        self.genes[2] = B
         angulo = self.genes[4]
         self.genes[4] = angulo[::-1]
         self.angulo = int(angulo[::-1],2)

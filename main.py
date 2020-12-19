@@ -8,6 +8,7 @@ from PIL import Image
 from abeja import *
 from flor import *
 import random
+import time
 
 imagen1 = np.array(Image.open('fondo.jpg'))
 cantFlores = 500
@@ -24,6 +25,7 @@ floresNOCruces = [] #flores no visitadas
 porcentajeSeleccionAbejas = 40
 porcentajeSeleccionFlores = 30
 porcentajeMutacion = 15
+cantGeneraciones = 20
 
 
 
@@ -34,23 +36,23 @@ def cruces():
     seleccionFlores = cantFlores * porcentajeSeleccionFlores // 100
     cruceFlores(seleccionFlores)
     cruceAbejas(seleccionAbejas)
-    generacion += 1
+
 
 
 def cruceFlores(indiceSeleccion):
     flores = poblacionesFlores[generacion]
-    floresSeleccionadas = flores[indiceSeleccion:]  # abejas seleccionadas para el cruce
+    floresSeleccionadas = flores[indiceSeleccion:]  #
     cantNoSeleccionadas = indiceSeleccion
     cantSeleccionadas = len(floresSeleccionadas)
     posPadre = 0
     posMadre = 1
     temp = []
-    while posMadre <= cantFlores -1:
+    while posMadre <= cantFlores-1:
+        padre = flores[posPadre]
+        madre = flores[posMadre]
         if posMadre == cantSeleccionadas:
             padre = flores[random.randint(0, cantSeleccionadas)]
             madre = flores[random.randint(0, cantSeleccionadas)]
-        padre = flores[posPadre]
-        madre = flores[posMadre]
         genesPadre = padre.getGenes()
         genesMadre = madre.getGenes()
         cromosomasCruce = random.randint(1, 4)
@@ -91,6 +93,15 @@ def cruceFlores(indiceSeleccion):
     poblacionesFlores.append(temp)
 
 
+def mutacionFlores():
+    flores = poblacionAbejas[generacion]
+    indiceMutacion = cantFlores * porcentajeMutacion // 100
+    cantMutadas = 0
+    while cantMutadas <= indiceMutacion:
+        flor = flores[random.randint(0,len(flores)-1)]
+        flor.mutacion()
+        cantMutadas+=1
+
 
 def cruceAbejas(indiceSeleccion):
     abejas = poblacionAbejas[generacion]
@@ -102,11 +113,11 @@ def cruceAbejas(indiceSeleccion):
     temp=[]
 
     while posMadre<=cantAbejas-1:
+        padre = abejas[posPadre]
+        madre = abejas[posMadre]
         if posMadre == cantSeleccionadas:
             padre = abejas[random.randint(0,cantSeleccionadas)]
             madre = abejas[random.randint(0,cantSeleccionadas)]
-        padre = abejas[posPadre]
-        madre = abejas[posMadre]
         genesPadre = padre.getGenes()
         genesMadre = madre.getGenes()
         cromosomasCruce = random.randint(1,4)
@@ -180,7 +191,7 @@ def agruparFlores():
     floresNOCruces.append(noCruce)
 
 def ordenarFloresCruce():
-    flores = floresXCruces[generacion]
+    flores = poblacionesFlores[generacion]
     n = len(flores)
     flores = quickSortFlores(flores,0,n-1)
 
@@ -391,6 +402,19 @@ def guardarColores():
         B = random.randint(1, 255)
         colores += [(R, G, B)]
 
+def limpiarMatrices():
+    global matrizFlores
+    for i in range(0,100):
+        for j in range(0,100):
+            matrizFlores[i][j] = 0
+            imagen1[i][j] = (255,255,255)
+
+def actualizarMatrizFlores():
+    for flor in poblacionesFlores[generacion]:
+        x,y = flor.getPos()
+        matrizFlores[x][y] = flor
+        imagen1[x][y] = flor.getColor()
+
 
 def crearMatrizFlores():
     res = []
@@ -440,6 +464,23 @@ def generacion1Abejas():
     poblacionAbejas.append(temp)
 
 
+def ciclo():
+    global generacion
+    busquedaAbejas()
+    calcularDistanciaXFlores()
+    ordenarAbejas()
+    sumatoriaAdaptabilidad()
+    asignarAdaptabilidadNormalizada()
+    agruparFlores()
+    ordenarFloresCruce()
+    cruces()
+    mutacionAbejas()
+    # mutacionFlores()
+    limpiarMatrices()
+    actualizarMatrizFlores()
+    generacion += 1
+
+
 def modificarPixeles():
     # for i in range(100):
     #     for j in range(100):
@@ -462,7 +503,10 @@ win = pygame.display.set_mode((screen_width * scaling_factor, screen_height * sc
 
 screen = pygame.Surface((screen_width, screen_height))
 
+# modificarPixeles()
+contGeneraciones = 0
 run = True
+flagInicio = False
 while run:
     pygame.time.delay(100)
     for event in pygame.event.get():
@@ -474,19 +518,24 @@ while run:
                 crearMatrizFlores()
                 generacion1Flores()
                 generacion1Abejas()
-                busquedaAbejas()
-                calcularDistanciaXFlores()
-                ordenarAbejas()
-                sumatoriaAdaptabilidad()
-                asignarAdaptabilidadNormalizada()
-                agruparFlores()
-                ordenarFloresCruce()
-                cruces()
-                mutacionAbejas()
+                flagInicio = True
+                # inicio
                 1 + 1
 
+    # time.sleep(1)
+    # guardarColores()
+    # crearMatrizFlores()
+    # generacion1Flores()
+    # generacion1Abejas()
+
+    if flagInicio:
+        if contGeneraciones <= cantGeneraciones:
+            ciclo()
+            contGeneraciones+=1
+            time.sleep(1)
+
+    1+1
     win.fill(white)
-    modificarPixeles()
     surface1 = pygame.surfarray.make_surface(imagen1)
     screen.blit(surface1, (0, 0))
     # pygame.draw.rect(screen, white, (x, y, rect_width, rect_height))
