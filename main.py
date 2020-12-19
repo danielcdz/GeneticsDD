@@ -616,9 +616,7 @@ while run:
             ciclo()
             contGeneraciones+=1
             print("Generacion: ",generacion)
-            # time.sleep(0.5)
-
-
+            time.sleep(0.5)
 
     1+1
     win.fill(white)
