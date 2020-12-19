@@ -28,10 +28,7 @@ poblacionesFlores = [] #historial del campo de flores
 porcentajeSeleccionAbejas = 40
 porcentajeSeleccionFlores = 30
 porcentajeMutacion = 15
-cantGeneraciones = 10
-
-
-
+cantGeneraciones = 20
 
 def cruces():
     global generacion
@@ -39,7 +36,6 @@ def cruces():
     seleccionFlores = cantFlores * porcentajeSeleccionFlores // 100
     cruceFlores(seleccionFlores)
     cruceAbejas(seleccionAbejas)
-
 
 
 def cruceFlores(indiceSeleccion):
@@ -97,7 +93,7 @@ def cruceFlores(indiceSeleccion):
 
 
 def mutacionFlores():
-    flores = poblacionAbejas[generacion]
+    flores = poblacionAbejas[generacion+1]
     indiceMutacion = cantFlores * porcentajeMutacion // 100
     cantMutadas = 0
     while cantMutadas <= indiceMutacion:
@@ -168,13 +164,14 @@ def cruceAbejas(indiceSeleccion):
     poblacionAbejas.append(temp)
 
 def mutacionAbejas():
-    abejas = poblacionAbejas[generacion]
+    abejas = poblacionAbejas[generacion+1]
     indiceMutacion = cantAbejas * porcentajeMutacion // 100
     cantMutadas = 0
     while cantMutadas <= indiceMutacion:
         abeja = abejas[random.randint(0,len(abejas)-1)]
         abeja.mutacion()
         cantMutadas+=1
+    1+1
 
 
 # def agruparFlores():
@@ -544,19 +541,29 @@ def verInfo(i,j):
     ancestros = abeja.ancestros
     mutada = abeja.mutada
     string = "Color: "
-    string += str(color[0]) +","+str(color[1]) +","+str(color[2]) +"\n"
-    string += "Dirección: " + str(direccion)+"\n"
-    string += "Ángulo: " + str(angulo) + "\n"
+    string += str(color[0]) +","+str(color[1]) +","+str(color[2]) +"\n" +"\n"
+    string += "Dirección: " + str(direccion)+"\n"+"\n"
+    string += "Ángulo: " + str(angulo) + "\n"+"\n"
+    string += "Recorrido: " + str(recorrido) + "\n"+"\n"
+    # string += "Distancia: " + str(distancia) + "\n"
+    string += "Flores visitadas: " + str(floresVisitadas) + "\n"+"\n"
+    string += "Distancia Recorrida: " + str(distanciaRecorrida) + "\n"+"\n"
+    string += "Polen recogido: " + str(polenRecogido) + "\n"+"\n"
+    string += "Adaptabilidad Normalizada: " + str(adaptabilidadNormalizada) + "\n"+"\n"
+    string += "genes: " + str(genes) + "\n"+"\n"
+    string += "Padres: " + str(padres) + "\n"+"\n"
+    string += "Ancestros: " + str(ancestros) + "\n"+"\n"
+    string += "Mutada: " + str(mutada) + "\n"+"\n"
 
     ventana = tkinter.Tk()
     # ventana.attributes("-fullscreen", True)
-    ventana.geometry("200x100")
+    ventana.geometry("900x400")
     ventana.title("Información abeja")
     ventana.config(background="#ffffff")
     titulo=Label(ventana, text=string, font=("Helvetiva 13"), fg="#000000", bg="#ffffff")
     titulo.place(x=10,y=10)
     # label = Label(ventana, textvariable="string")
-    label.pack()
+    titulo.pack()
 
     # tkinter.messagebox.askokcancel(title="Información de la abeja", message=string)
     print(i,j)
@@ -610,6 +617,8 @@ while run:
             contGeneraciones+=1
             print("Generacion: ",generacion)
             # time.sleep(0.5)
+
+
 
     1+1
     win.fill(white)
