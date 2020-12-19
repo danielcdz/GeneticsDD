@@ -12,6 +12,10 @@ class Flor:
     def getPos(self):
         return self.posicion
 
+    def setPos(self,pos):
+        self.posicion = pos
+
+
     def mutacion(self):
         X = self.genes[3]
         Y = self.genes[4]
@@ -22,6 +26,7 @@ class Flor:
         self.mutacion = True
 
     def setGenes(self):
+        self.genes = []
         R = bin(self.color[0])[2:]
         G = bin(self.color[1])[2:]
         B = bin(self.color[2])[2:]
@@ -47,6 +52,3 @@ class Flor:
 
     def getColor(self):
         return self.color
-
-    def posicion(self):
-        return self.posicion

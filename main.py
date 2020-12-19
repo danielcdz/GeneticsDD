@@ -10,22 +10,25 @@ from flor import *
 import random
 import time
 
+import tkinter
+from tkinter import Frame,Button,Message,Label
+
 imagen1 = np.array(Image.open('fondo.jpg'))
-cantFlores = 500
+cantFlores = 800
 cantColores = 16
-cantAbejas = 16
+cantAbejas = 20
 matrizFlores = []
 colores = []
 poblacionAbejas = []
 generacion = 0
 promediosAdaptabilidad = []
 poblacionesFlores = [] #historial del campo de flores
-floresXCruces = [] #flores seleccionadas para cruzar
-floresNOCruces = [] #flores no visitadas
+# floresXCruces = [] #flores seleccionadas para cruzar
+# floresNOCruces = [] #flores no visitadas
 porcentajeSeleccionAbejas = 40
 porcentajeSeleccionFlores = 30
 porcentajeMutacion = 15
-cantGeneraciones = 20
+cantGeneraciones = 10
 
 
 
@@ -51,11 +54,11 @@ def cruceFlores(indiceSeleccion):
         padre = flores[posPadre]
         madre = flores[posMadre]
         if posMadre == cantSeleccionadas:
-            padre = flores[random.randint(0, cantSeleccionadas)]
-            madre = flores[random.randint(0, cantSeleccionadas)]
+            padre = floresSeleccionadas[random.randint(0, cantSeleccionadas)]
+            madre = floresSeleccionadas[random.randint(0, cantSeleccionadas)]
         genesPadre = padre.getGenes()
         genesMadre = madre.getGenes()
-        cromosomasCruce = random.randint(1, 4)
+        cromosomasCruce = random.randint(0, 4)
         genPadre = genesPadre[cromosomasCruce]
         genMadre = genesMadre[cromosomasCruce]
         genesPadre[cromosomasCruce] = genMadre
@@ -116,8 +119,8 @@ def cruceAbejas(indiceSeleccion):
         padre = abejas[posPadre]
         madre = abejas[posMadre]
         if posMadre == cantSeleccionadas:
-            padre = abejas[random.randint(0,cantSeleccionadas)]
-            madre = abejas[random.randint(0,cantSeleccionadas)]
+            padre = abejasSeleccionadas[random.randint(0,cantSeleccionadas)]
+            madre = abejasSeleccionadas[random.randint(0,cantSeleccionadas)]
         genesPadre = padre.getGenes()
         genesMadre = madre.getGenes()
         cromosomasCruce = random.randint(1,4)
@@ -174,21 +177,21 @@ def mutacionAbejas():
         cantMutadas+=1
 
 
-def agruparFlores():
-    cruce = []
-    noCruce = []
-    poblacion = []
-    for i in matrizFlores:
-        for j in i:
-            if j != 0:
-                poblacion += [j]
-                if j.getVisitas() != 0:
-                    cruce += [j]
-                else:
-                    noCruce += [j]
-    poblacionesFlores.append(poblacion)
-    floresXCruces.append(cruce)
-    floresNOCruces.append(noCruce)
+# def agruparFlores():
+#     cruce = []
+#     noCruce = []
+#     poblacion = []
+#     for i in matrizFlores:
+#         for j in i:
+#             if j != 0:
+#                 poblacion += [j]
+#                 if j.getVisitas() != 0:
+#                     cruce += [j]
+#                 else:
+#                     noCruce += [j]
+#     poblacionesFlores.append(poblacion)
+#     floresXCruces.append(cruce)
+#     floresNOCruces.append(noCruce)
 
 def ordenarFloresCruce():
     flores = poblacionesFlores[generacion]
@@ -404,16 +407,23 @@ def guardarColores():
 
 def limpiarMatrices():
     global matrizFlores
-    for i in range(0,100):
-        for j in range(0,100):
+    for i in range(100):
+        for j in range(100):
             matrizFlores[i][j] = 0
             imagen1[i][j] = (255,255,255)
+    1+1
+
 
 def actualizarMatrizFlores():
-    for flor in poblacionesFlores[generacion]:
-        x,y = flor.getPos()
-        matrizFlores[x][y] = flor
-        imagen1[x][y] = flor.getColor()
+    for flor in poblacionesFlores[generacion+1]:
+        X,Y = flor.getPos()
+        while not disponible(X, Y):
+            X = random.randint(0, 99)
+            Y = random.randint(0, 99)
+        flor.setPos((X,Y))
+        matrizFlores[X][Y] = flor
+        imagen1[X][Y] = flor.getColor()
+    1+1
 
 
 def crearMatrizFlores():
@@ -430,6 +440,7 @@ def crearMatrizFlores():
 
 def generacion1Flores():
     global matrizFlores
+    temp=[]
     for i in range(cantFlores):
         X = random.randint(0, 99)
         Y = random.randint(0, 99)
@@ -442,6 +453,8 @@ def generacion1Flores():
         flor.setGenes()
         imagen1[pos[0]][pos[1]] = color
         matrizFlores[pos[0]][pos[1]] = flor
+        temp+=[flor]
+    poblacionesFlores.append(temp)
 
 def disponible(x,y):
     if matrizFlores[x][y] == 0:
@@ -471,11 +484,11 @@ def ciclo():
     ordenarAbejas()
     sumatoriaAdaptabilidad()
     asignarAdaptabilidadNormalizada()
-    agruparFlores()
+    # agruparFlores()
     ordenarFloresCruce()
     cruces()
     mutacionAbejas()
-    # mutacionFlores()
+    mutacionFlores()
     limpiarMatrices()
     actualizarMatrizFlores()
     generacion += 1
@@ -486,6 +499,67 @@ def modificarPixeles():
     #     for j in range(100):
     #         if j % 2 == 0:
     imagen1[50, 50] = 0
+
+
+
+def ventanaInformacion():
+    ventana = tkinter.Tk()
+    # ventana.attributes("-fullscreen", True)
+    ventana.geometry("1000x700")
+    ventana.resizable(0, 0)
+
+    ventana.title("Informacion recolectada")
+    ventana.config(background="#ffffff")
+
+    # Frame
+    frame = Frame(ventana)
+    frame.grid(column=0, row=0, padx=(150), pady=(80))
+    frame.columnconfigure(0, weight=1)
+    frame.rowconfigure(0, weight=1)
+
+    for i in range(cantAbejas):
+        for j in range(cantAbejas):
+            x = str(i)
+            y = str(j)
+            pos = x+','+y
+            boton = Button(frame, text=pos, width=3, height=1, bg="#ffffff", font=("Helvetiva 10"), fg="black",
+                           activebackground="#353637", command=lambda row=i, column=j : verInfo(row,column))
+            boton.grid(column=j, row=i)
+    ventana.mainloop()
+
+def verInfo(i,j):
+    abeja = poblacionAbejas[i][j]
+    color = abeja.color
+    direccion = abeja.direccion
+    angulo = abeja.angulo
+    recorrido = abeja.recorrido
+    distancia = abeja.distancia
+    floresVisitadas =  abeja.floresVisitadas
+    distanciaRecorrida = abeja.distanciaRecorrida
+    polenRecogido = abeja.polenRecogido
+    adaptabilidadNormalizada = abeja.adaptabilidadNormalizada
+    distanciaXflores = abeja.distanciaXflores
+    genes = abeja.genes
+    padres = abeja.padres
+    ancestros = abeja.ancestros
+    mutada = abeja.mutada
+    string = "Color: "
+    string += str(color[0]) +","+str(color[1]) +","+str(color[2]) +"\n"
+    string += "Dirección: " + str(direccion)+"\n"
+    string += "Ángulo: " + str(angulo) + "\n"
+
+    ventana = tkinter.Tk()
+    # ventana.attributes("-fullscreen", True)
+    ventana.geometry("200x100")
+    ventana.title("Información abeja")
+    ventana.config(background="#ffffff")
+    titulo=Label(ventana, text=string, font=("Helvetiva 13"), fg="#000000", bg="#ffffff")
+    titulo.place(x=10,y=10)
+    # label = Label(ventana, textvariable="string")
+    label.pack()
+
+    # tkinter.messagebox.askokcancel(title="Información de la abeja", message=string)
+    print(i,j)
 
 
 # ------------------------------------ PYGAME ------------------------------------------------------
@@ -521,6 +595,8 @@ while run:
                 flagInicio = True
                 # inicio
                 1 + 1
+            if event.key == pygame.K_DOWN:
+                ventanaInformacion()
 
     # time.sleep(1)
     # guardarColores()
@@ -532,7 +608,8 @@ while run:
         if contGeneraciones <= cantGeneraciones:
             ciclo()
             contGeneraciones+=1
-            time.sleep(1)
+            print("Generacion: ",generacion)
+            # time.sleep(0.5)
 
     1+1
     win.fill(white)
